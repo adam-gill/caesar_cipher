@@ -1,3 +1,8 @@
+# Written by Adam Gill 4/8/24 13:52
+# This program encrypts and decrypts text with a caesar shift, the shift amount which the user chooses (positive for right, negative for left)
+# Just run the program, the instructions should be pretty clear and self explanatory
+# I also tried to handle all the possible input errors that could occur
+
 def driver():
     intro = input("This is a simple caesar cipher program to encrypt and decrypt text. Press enter to continue ")
     
