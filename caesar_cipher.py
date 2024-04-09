@@ -2,6 +2,7 @@
 # This program encrypts and decrypts text with a caesar shift, the shift amount which the user chooses (positive for right, negative for left)
 # Just run the program, the instructions should be pretty clear and self explanatory
 # I also tried to handle all the possible input errors that could occur
+# This program only shifts letters of the alphabet, all other characters are left the same
 
 def driver():
     intro = input("This is a simple caesar cipher program to encrypt and decrypt text. Press enter to continue ")
@@ -26,11 +27,11 @@ def driver():
                 else:
                     print("Invalid input, try again.")
             
-            print(f"Encrypted text: {caesar_cipher_encrypt(plain_text, shift)}")
+            print(f"Encrypted text: {caesar_cipher(plain_text, shift)}")
 
 
         elif enc_or_dec == 1:
-            cipher_text = input("Enter your text to decrypt: ")
+            cipher_text = input("Enter your text to decrypt (simply enter the opposite of the shift used for encryption): ")
 
             while True:
                 shift = input("Enter your shift amount as an integer (positive for right shift and negative for left shift): ")
@@ -40,7 +41,7 @@ def driver():
                 else:
                     print("Invalid input, try again.")
             
-            print(f"Decrypted text: {caesar_cipher_decrypt(cipher_text, shift)}")
+            print(f"Decrypted text: {caesar_cipher(cipher_text, shift)}")
         else:
             print("Invalid input, try again.")
 
@@ -55,38 +56,18 @@ def driver():
 
 
 
-def caesar_cipher_encrypt(text: str, shift: int) -> list[int]:
-    ascii_list = string_to_ascii(text)
+def caesar_cipher(text: str, shift: int) -> list[int]:
+    res = ""
 
-    for i in range(len(ascii_list)):
-        ascii_list[i] += shift
+    for char in text:
+        if char.isalpha():
+            offset = 65 if char.isupper() else 97
+            shifted_char = chr((ord(char) - offset + shift) % 26 + offset)
+            res += shifted_char
+        else:
+            res += char
+    return res
 
-    return ascii_to_string(ascii_list)
-
-def caesar_cipher_decrypt(cipher: str, shift: int) -> list[int]:
-    ascii_list = string_to_ascii(cipher)
-
-    for i in range(len(ascii_list)):
-        ascii_list[i] -= shift
-
-    return ascii_to_string(ascii_list)
-
-
-def string_to_ascii(text):
-    ascii_codes = []
-
-    for char in text: 
-        ascii_codes.append(ord(char))
-
-    return ascii_codes
-
-def ascii_to_string(ascii_list):
-    text = ""
-
-    for code in ascii_list:
-        text += chr(code)
-    
-    return text
 
 def is_int(int_input):
     try:
